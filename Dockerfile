@@ -1,13 +1,14 @@
 FROM openjdk:11
 # plugin version from https://github.com/ostorlab/gitlabci/releases
-ENV PLUGIN_VERSION 1.0
+ENV PLUGIN_VERSION 1.1
+ENV PLUGIN_JAR_VERSION 1.0
 #
 # Download Ostorlab plugin source
 RUN mkdir -p /usr/local/share/ostorlab
 RUN curl -Ls https://github.com/ostorlab/gitlabci/archive/${PLUGIN_VERSION}.tar.gz | tar -xzf - -C /usr/local/share/ostorlab
 RUN cp /usr/local/share/ostorlab/gitlabci-${PLUGIN_VERSION}/bin/run.sh /usr/local/bin/run_ostorlab.sh
 
-ENV PLUGIN_JAR /usr/local/share/ostorlab/gitlabci-${PLUGIN_VERSION}/libs/ostorlab_integration_${PLUGIN_VERSION}.jar
+ENV PLUGIN_JAR /usr/local/share/ostorlab/gitlabci-${PLUGIN_VERSION}/libs/ostorlab_integration_${PLUGIN_JAR_VERSION}.jar
 #
 
 ### Supported environment variables:
