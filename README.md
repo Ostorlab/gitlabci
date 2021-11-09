@@ -75,10 +75,10 @@ Select Settings option from your Gitlab project and then jump to `Variables` sec
 
 ![Gitlab Environment Add Variable](https://github.com/Ostorlab/gitlabci/blob/main/img/add_variable.png)
 
-![Gitlab Environment Variables](https://github.com/Ostorlab/gitlabci/blob/main/img/addedvariables.png)
+![Gitlab Environment Variables](https://github.com/Ostorlab/gitlabci/blob/main/img/added_variables.png)
 
 ## Verifying the Build
 Once the job is done, if you choose to wait for the scan result and break if the risk rating is higher than the threshold, than the job might fail if its risk rating is equal or higher than the threshod.
 Otherwise, the job will succeed with a line indicating the scan risk rating
 
-![View Score](https://github.com/jenkinsci/Ostorlab/blob/main/img/pipeline.png)
+![View Score](https://github.com/Ostorlab/gitlabci/blob/main/img/pipeline.png)
