@@ -23,7 +23,7 @@ if [[ -z "${OSTORLAB_ARTIFACTS_DIR}" ]]; then
 fi
 
 if [[ -z "${OSTORLAB_FILE_PATH}" ]]; then
-  echo "Please specify the application file to scan using environment variable OSTORLAB_FILEPATH"
+  echo "Please specify the application file to scan using environment variable OSTORLAB_FILE_PATH"
   exit 1
 fi
 
