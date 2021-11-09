@@ -4,7 +4,7 @@
 ###
 
 if [[ -z "${PLUGIN_VERSION}" ]]; then
-  PLUGIN_VERSION="1.0"
+  PLUGIN_VERSION="1.3"
 fi
 
 if [[ -z "${PLUGIN_JAR}" ]]; then
@@ -32,5 +32,5 @@ if [[ -z "${OSTORLAB_PLATFORM}" ]]; then
   exit 1
 fi
 
-exec java -jar ${PLUGIN_JAR} --api-key $OSTORLAB_API_KEY --api-key $OSTORLAB_API_KEY --file-path $OSTORLAB_FILEPATH  --artifacts-dir $OSTORLAB_ARTIFACTS_DIR --platform $OSTORLAB_PLATFORM
+exec java -jar ${PLUGIN_JAR} --api-key $OSTORLAB_API_KEY --api-key $OSTORLAB_API_KEY --file-path $OSTORLAB_FILE_PATH  --artifacts-dir $OSTORLAB_ARTIFACTS_DIR --platform $OSTORLAB_PLATFORM
 
