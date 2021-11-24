@@ -22,7 +22,7 @@ To get more information visit us at https://www.ostorlab.co
 ### Required environment variables
 
 - `OSTORLAB_API_KEY` - Specifies your API key
-- `OSTORLAB_FILE_PATH` - Specifies the path to the Android APK file or iOS IPA file
+- `OSTORLAB_FILE_PATH` - Specifies the path to the Android APK file or the iOS IPA file
 - `OSTORLAB_PLATFORM` - Specifies the platform. Possible values: `android` or `ios`
 
 ### Optional environment variables
@@ -31,7 +31,7 @@ To get more information visit us at https://www.ostorlab.co
 - `OSTORLAB_TITLE` - Specifies the scan title
 - `OSTORLAB_WAIT_FOR_RESULTS` - Set to `true` if you want to wait for the scan to finish and retrieve the result
 - `OSTORLAB_WAIT_MINUTES` - Specifies the number of minutes to wait. Default value: `30`
-- `OSTORLAB_BREAK_BUILD_ON_SCORE` - Set to `tru`e to generate an exception if the scan risk rating is higher than the threshold
+- `OSTORLAB_BREAK_BUILD_ON_SCORE` - Set to `true` to generate an exception if the scan risk rating is higher than the threshold
 - `OSTORLAB_RISK_THRESHOLD` - Specifies your risk rating threshold. Possible values: `LOW`
 
 ## Creating a GitLab CI pipeline:
