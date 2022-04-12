@@ -3,13 +3,13 @@
 # Ostorlab shell script to use the jar library. it uploads the application, start the scan and fetch the results
 ###
 
-if [[ ! -v PLUGIN_VERSION ]]; then
-  PLUGIN_VERSION="1.3"
+if [[ ! -v PLUGIN_JAR_VERSION ]]; then
+  PLUGIN_JAR_VERSION="1.2"
 fi
 
 if [[ ! -v PLUGIN_JAR ]]; then
   BIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-  PLUGIN_JAR=${BIN_DIR}/../libs/ostorlab_integration_${PLUGIN_VERSION}.jar
+  PLUGIN_JAR=${BIN_DIR}/../libs/ostorlab_integration_${PLUGIN_JAR_VERSION}.jar
 fi
 
 if [[ ! -v OSTORLAB_API_KEY ]]; then

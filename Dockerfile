@@ -1,7 +1,7 @@
 FROM openjdk:11
 # plugin version from https://github.com/ostorlab/gitlabci/releases
-ENV PLUGIN_VERSION 1.3
-ENV PLUGIN_JAR_VERSION 1.1
+ENV PLUGIN_VERSION 1.4
+ENV PLUGIN_JAR_VERSION 1.2
 #
 # Download Ostorlab plugin source
 RUN mkdir -p /usr/local/share/ostorlab
