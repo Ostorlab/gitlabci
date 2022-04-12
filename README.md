@@ -27,7 +27,7 @@ To get more information visit us at https://www.ostorlab.co
 
 ### Optional environment variables
 
-- `OSTORLAB_PLAN` - Specifies your scan plan. Possible values: `free` for community scans or `static_dynamic_backend` for full analysis
+- `OSTORLAB_SCAN_PROFILE` - Select the scan profile to run. You can choose between `Fast Scan` for rapid static analysis or `Full Scan` for full Static, Dynamic and Backend analysis.
 - `OSTORLAB_TITLE` - Specifies the scan title
 - `OSTORLAB_WAIT_FOR_RESULTS` - Set to `true` if you want to wait for the scan to finish and retrieve the result
 - `OSTORLAB_WAIT_MINUTES` - Specifies the number of minutes to wait. Default value: `30`
