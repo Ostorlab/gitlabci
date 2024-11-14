@@ -152,9 +152,9 @@ fi
 
 # Check if the platform is "android-apk" or "ios-ipa"
 if [[ "$PLATFORM" == "android-apk" || "$PLATFORM" == "ios-ipa" ]]; then
-  exec /home/asasas/.local/bin/oxo --api-key $OSTORLAB_API_KEY ci-scan run "${TITLE_ARG}" ${BREAK_ON_RISK_RATING} ${MAX_WAIT_MINUTES} ${SCAN_PROFILE} ${SBOM_ARGS} ${CREDENTIALS_ARGS} ${CUSTOM_CREDENTIALS_ARGS} $PLATFORM $OSTORLAB_FILE_PATH
+  exec /usr/local/bin/oxo --api-key $OSTORLAB_API_KEY ci-scan run "${TITLE_ARG}" ${BREAK_ON_RISK_RATING} ${MAX_WAIT_MINUTES} ${SCAN_PROFILE} ${SBOM_ARGS} ${CREDENTIALS_ARGS} ${CUSTOM_CREDENTIALS_ARGS} $PLATFORM $OSTORLAB_FILE_PATH
 # Check if the platform contains "link"
 elif [[ "$PLATFORM" == "link" ]]; then
-    exec /home/asasas/.local/bin/oxo --api-key $OSTORLAB_API_KEY ci-scan run "${TITLE_ARG}" ${BREAK_ON_RISK_RATING} ${MAX_WAIT_MINUTES} ${SCAN_PROFILE} ${SBOM_ARGS} ${API_SCHEMA} ${FILTERED_URL_REGEXES_ARGS} ${PROXY} ${QPS} ${CREDENTIALS_ARGS} ${CUSTOM_CREDENTIALS_ARGS} $PLATFORM $URLS
+    exec /usr/local/bin/oxo --api-key $OSTORLAB_API_KEY ci-scan run "${TITLE_ARG}" ${BREAK_ON_RISK_RATING} ${MAX_WAIT_MINUTES} ${SCAN_PROFILE} ${SBOM_ARGS} ${API_SCHEMA} ${FILTERED_URL_REGEXES_ARGS} ${PROXY} ${QPS} ${CREDENTIALS_ARGS} ${CUSTOM_CREDENTIALS_ARGS} $PLATFORM $URLS
 fi
 
