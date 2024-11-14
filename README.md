@@ -128,6 +128,7 @@ runScanOstorlab:
   variables:
     OSTORLAB_URLS: https://example1.com https://example2.com
     OSTORLAB_PLATFORM: link
+    OSTORLAB_SCAN_PROFILE: 'Full Web Scan'
     OSTORLAB_CREDENTIALS: user1,pass1,admin,https://example1.com;user2,pass2,user,https://example2.com
     OSTORLAB_SBOM_FILES: /path/to/sbom1.json /path/to/sbom2.json
   script:
