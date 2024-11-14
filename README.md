@@ -24,7 +24,7 @@ To get more information visit us at https://www.ostorlab.co
 - `OSTORLAB_API_KEY` - Specifies your API key
 - `OSTORLAB_FILE_PATH` - Specifies the path to the Android APK file or the iOS IPA file. This is mandatory if you are scanning a mobile application.
 - `OSTORLAB_URLS` - Specifies the list of URLS to scan (separated by space). This is mandatory if you are scanning a Web application.
-- `OSTORLAB_PLATFORM` - Specifies the platform. Possible values: `android` or `ios`
+- `OSTORLAB_PLATFORM` - Specifies the platform. Possible values: `android` or `ios` or `link`.
 
 ### Optional environment variables
 
