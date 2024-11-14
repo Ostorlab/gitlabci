@@ -22,21 +22,37 @@ To get more information visit us at https://www.ostorlab.co
 ### Required environment variables
 
 - `OSTORLAB_API_KEY` - Specifies your API key
-- `OSTORLAB_FILE_PATH` - Specifies the path to the Android APK file or the iOS IPA file
+- `OSTORLAB_FILE_PATH` - Specifies the path to the Android APK file or the iOS IPA file. This is mandatory if you are scanning a mobile application.
+- `OSTORLAB_URLS` - Specifies the list of URLS to scan (separated by space). This is mandatory if you are scanning a Web application.
 - `OSTORLAB_PLATFORM` - Specifies the platform. Possible values: `android` or `ios`
 
 ### Optional environment variables
 
+#### For a Mobile scan:
 - `OSTORLAB_SCAN_PROFILE` - Select the scan profile to run. You can choose between `Fast Scan` for rapid static analysis or `Full Scan` for full Static, Dynamic and Backend analysis.
 - `OSTORLAB_TITLE` - Specifies the scan title
-- `OSTORLAB_WAIT_FOR_RESULTS` - Set to `true` if you want to wait for the scan to finish and retrieve the result
-- `OSTORLAB_WAIT_MINUTES` - Specifies the number of minutes to wait. Default value: `30`
-- `OSTORLAB_BREAK_BUILD_ON_SCORE` - Set to `true` to generate an exception if the scan risk rating is higher than the threshold
-- `OSTORLAB_RISK_THRESHOLD` - Specifies your risk rating threshold. Possible values: `LOW`
+- `OSTORLAB_RISK_THRESHOLD` - Sets a risk rating threshold to break the pipeline if exceeded.
+- `OSTORLAB_MAX_WAIT_MINUTES` - Specifies the number of minutes to wait. Default value: `30`. It is applied only if OSTORLAB_RISK_THRESHOLD is set.
+- `OSTORLAB_SBOM_FILES` - A space-separated list of paths to SBOM files.
+- `OSTORLAB_CREDENTIALS` - A semicolon-separated list of credentials with each credential in the format login,password. For example: "user1,pass1;user2,pass2".
+- `OSTORLAB_CUSTOM_CREDENTIALS` - A semicolon-separated list of custom credentials in the format name,value. For example: "api_token,12345;secret_key,67890"
+
+#### For a Web scan:
+- `OSTORLAB_SCAN_PROFILE` - Set the value to `Full Web Scan` for a Web scan.
+- `OSTORLAB_TITLE` - Specifies the scan title
+- `OSTORLAB_RISK_THRESHOLD` - Sets a risk rating threshold to break the pipeline if exceeded.
+- `OSTORLAB_MAX_WAIT_MINUTES` - Specifies the number of minutes to wait. Default value: `30`. It is applied only if OSTORLAB_RISK_THRESHOLD is set.
+- `OSTORLAB_SBOM_FILES` - A space-separated list of paths to SBOM files.
+- `OSTORLAB_CREDENTIALS` - A semicolon-separated list of credentials with each credential in the format login,password,role,url. For example: "user1,pass1,admin,https://example.com;user2,pass2,user,https://example.com". The role and url values are mandatory for the Web scans.
+- `OSTORLAB_CUSTOM_CREDENTIALS` - A semicolon-separated list of custom credentials in the format name,value. For example: "api_token,12345;secret_key,67890"
+- `OSTORLAB_API_SCHEMA` - The paths to the API schema file to be used for the scan.
+- `OSTORLAB_FILTERED_URL_REGEXES` - A space-separated list of regular expressions to exclude URLs from the scan.
+- `OSTORLAB_PROXY` - Specifies the proxy settings for the scan.
+- `OSTORLAB_QPS` - Specifies queries per second limit for the scan
 
 ## Creating a GitLab CI pipeline:
 
-Example to use for your `.gitlab-ci.yml`
+Example to use for your `.gitlab-ci.yml` to scan a Mobile application
 
 ```yaml
 stages:
@@ -58,6 +74,62 @@ runScanOstorlab:
   variables:
     OSTORLAB_FILE_PATH: app/build/outputs/apk/debug/app-debug.apk
     OSTORLAB_PLATFORM: android
+  script:
+    - run_ostorlab.sh
+```
+
+Example to use for your `.gitlab-ci.yml` to scan a Mobile application with test credentials and SBOM files
+
+```yaml
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+      - Pre steps to build
+      - ./gradlew assembleDebug
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+runScanOstorlab:
+  stage: test
+  image: ostorlab/gitlab-ci
+  variables:
+    OSTORLAB_FILE_PATH: app/build/outputs/apk/debug/app-debug.apk
+    OSTORLAB_PLATFORM: android
+    OSTORLAB_CREDENTIALS: user1,pass1;user2,pass2
+    OSTORLAB_SBOM_FILES: /path/to/sbom1.json /path/to/sbom2.json
+  script:
+    - run_ostorlab.sh
+```
+
+Example to use for your `.gitlab-ci.yml` to scan a Web application 
+
+```yaml
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+      - Pre steps to build
+      - ./gradlew assembleDebug
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+runScanOstorlab:
+  stage: test
+  image: ostorlab/gitlab-ci
+  variables:
+    OSTORLAB_URLS: https://example1.com https://example2.com
+    OSTORLAB_PLATFORM: link
+    OSTORLAB_CREDENTIALS: user1,pass1,admin,https://example1.com;user2,pass2,user,https://example2.com
+    OSTORLAB_SBOM_FILES: /path/to/sbom1.json /path/to/sbom2.json
   script:
     - run_ostorlab.sh
 ```
