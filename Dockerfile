@@ -1,14 +1,10 @@
-FROM openjdk:11
-# plugin version from https://github.com/ostorlab/gitlabci/releases
-ENV PLUGIN_VERSION 1.4
-ENV PLUGIN_JAR_VERSION 1.2
-#
-# Download Ostorlab plugin source
-RUN mkdir -p /usr/local/share/ostorlab
-RUN curl -Ls https://github.com/ostorlab/gitlabci/archive/${PLUGIN_VERSION}.tar.gz | tar -xzf - -C /usr/local/share/ostorlab
-RUN cp /usr/local/share/ostorlab/gitlabci-${PLUGIN_VERSION}/bin/run.sh /usr/local/bin/run_ostorlab.sh
+FROM python:3.11-slim
 
-ENV PLUGIN_JAR /usr/local/share/ostorlab/gitlabci-${PLUGIN_VERSION}/libs/ostorlab_integration_${PLUGIN_JAR_VERSION}.jar
+# Download Ostorlab plugin source
+RUN python3.11 -m pip install --upgrade pip
+RUN python3.11 -m pip install ostorlab
+COPY bin/run.sh /usr/local/bin/run_ostorlab.sh
+
 #
 
 ### Supported environment variables:
@@ -19,6 +15,9 @@ ENV PLUGIN_JAR /usr/local/share/ostorlab/gitlabci-${PLUGIN_VERSION}/libs/ostorla
 
 CMD /usr/local/bin/run_ostorlab.sh
 
-## DOCKER COMMAND
-# docker run -v ~/Projects/apk:/source -v /tmp:/artifacts -e STORLAB_API_KEY=$OSTORLAB_API_KEY -e OSTORLAB_FILEPATH=$OSTORLAB_FILEPATH -e OSTORLAB_PLATFORM=android -it --rm $IMAGE_ID
+## DOCKER COMMAND for Android mobile scan
+# docker run -v ~/Projects/apk:/source -e OSTORLAB_API_KEY=$OSTORLAB_API_KEY -e OSTORLAB_FILE_PATH=$OSTORLAB_FILE_PATH -e OSTORLAB_PLATFORM=android -it --rm $IMAGE_ID
+
+## DOCKER COMMAND for Web scan
+# docker run -v ~/Projects/apk:/source -e OSTORLAB_API_KEY=$OSTORLAB_API_KEY -e OSTORLAB_FILE_PATH=$OSTORLAB_FILE_PATH -e OSTORLAB_PLATFORM=link -it --rm $IMAGE_ID
 
