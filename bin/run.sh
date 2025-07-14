@@ -74,7 +74,7 @@ fi
 SBOM_ARGS=""
 if [[ -n "${OSTORLAB_SBOM_FILES}" ]]; then
   for sbom_file in ${OSTORLAB_SBOM_FILES}; do
-    SBOM_ARGS+="--sbom-file=${sbom_file} "
+    SBOM_ARGS+="--sbom=${sbom_file} "
   done
 fi
 
