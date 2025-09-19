@@ -119,8 +119,20 @@ if [[ -n "${OSTORLAB_CUSTOM_CREDENTIALS}" ]]; then
     name="${FIELDS[0]}"
     value="${FIELDS[1]}"
 
-    # Add login and password (required)
-    CREDENTIALS_ARGS+="----test-credentials-name=${name} ----test-credentials-value=${value} "
+    # Add custom credentials (required)
+    CUSTOM_CREDENTIALS_ARGS+="--test-credentials-name=${name} --test-credentials-value=${value} "
+  done
+fi
+
+# Add UI prompts as arguments if OSTORLAB_UI_PROMPTS is set
+UI_PROMPTS_ARGS=()
+if [[ -n "${OSTORLAB_UI_PROMPTS}" ]]; then
+  # Split OSTORLAB_UI_PROMPTS by semicolon to process each prompt
+  IFS=';' read -ra UI_PROMPTS_ARRAY <<< "${OSTORLAB_UI_PROMPTS}"
+
+  for prompt in "${UI_PROMPTS_ARRAY[@]}"; do
+    # Add each prompt as a separate --ui-prompt argument to the array
+    UI_PROMPTS_ARGS+=("--ui-prompt" "${prompt}")
   done
 fi
 
@@ -152,9 +164,35 @@ fi
 
 # Check if the platform is "android-apk" or "ios-ipa"
 if [[ "$PLATFORM" == "android-apk" || "$PLATFORM" == "ios-ipa" ]]; then
-  exec /usr/local/bin/oxo --api-key $OSTORLAB_API_KEY ci-scan run "${TITLE_ARG}" ${BREAK_ON_RISK_RATING} ${MAX_WAIT_MINUTES} ${SCAN_PROFILE} ${SBOM_ARGS} ${CREDENTIALS_ARGS} ${CUSTOM_CREDENTIALS_ARGS} $PLATFORM $OSTORLAB_FILE_PATH
+
+  # Build the command using proper array expansion
+  exec /usr/local/bin/oxo --api-key "$OSTORLAB_API_KEY" ci-scan run \
+    "${TITLE_ARG}" \
+    ${BREAK_ON_RISK_RATING} \
+    ${MAX_WAIT_MINUTES} \
+    ${SCAN_PROFILE} \
+    ${SBOM_ARGS} \
+    ${CREDENTIALS_ARGS} \
+    ${CUSTOM_CREDENTIALS_ARGS} \
+    "${UI_PROMPTS_ARGS[@]}" \
+    "$PLATFORM" \
+    "$OSTORLAB_FILE_PATH"
 # Check if the platform contains "link"
 elif [[ "$PLATFORM" == "link" ]]; then
-    exec /usr/local/bin/oxo --api-key $OSTORLAB_API_KEY ci-scan run "${TITLE_ARG}" ${BREAK_ON_RISK_RATING} ${MAX_WAIT_MINUTES} ${SCAN_PROFILE} ${SBOM_ARGS} ${API_SCHEMA} ${FILTERED_URL_REGEXES_ARGS} ${PROXY} ${QPS} ${CREDENTIALS_ARGS} ${CUSTOM_CREDENTIALS_ARGS} $PLATFORM $URLS
+    exec /usr/local/bin/oxo --api-key "$OSTORLAB_API_KEY" ci-scan run \
+      "${TITLE_ARG}" \
+      ${BREAK_ON_RISK_RATING} \
+      ${MAX_WAIT_MINUTES} \
+      ${SCAN_PROFILE} \
+      ${SBOM_ARGS} \
+      ${API_SCHEMA} \
+      ${FILTERED_URL_REGEXES_ARGS} \
+      ${PROXY} \
+      ${QPS} \
+      ${CREDENTIALS_ARGS} \
+      ${CUSTOM_CREDENTIALS_ARGS} \
+      "${UI_PROMPTS_ARGS[@]}" \
+      "$PLATFORM" \
+      ${URLS}
 fi
 
