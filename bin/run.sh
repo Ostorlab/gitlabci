@@ -124,7 +124,6 @@ if [[ -n "${OSTORLAB_CUSTOM_CREDENTIALS}" ]]; then
   done
 fi
 
-# Add UI prompts as arguments if OSTORLAB_UI_PROMPT_NAMES and OSTORLAB_UI_PROMPT_ACTIONS are set
 UI_PROMPTS_ARGS=()
 if [[ -n "${OSTORLAB_UI_PROMPT_NAMES}" && -n "${OSTORLAB_UI_PROMPT_ACTIONS}" ]]; then
   IFS=';' read -ra UI_PROMPT_NAMES_ARRAY <<< "${OSTORLAB_UI_PROMPT_NAMES}"
@@ -138,6 +137,15 @@ if [[ -n "${OSTORLAB_UI_PROMPT_NAMES}" && -n "${OSTORLAB_UI_PROMPT_ACTIONS}" ]];
     action="${UI_PROMPT_ACTIONS_ARRAY[$idx]}"
     if [[ -n "${name}" && -n "${action}" ]]; then
       UI_PROMPTS_ARGS+=("--ui-prompt-name" "${name}" "--ui-prompt-action" "${action}")
+    fi
+  done
+fi
+
+if [[ -n "${OSTORLAB_UI_PROMPT_IDS}" ]]; then
+  IFS=';' read -ra UI_PROMPT_IDS_ARRAY <<< "${OSTORLAB_UI_PROMPT_IDS}"
+  for id in "${UI_PROMPT_IDS_ARRAY[@]}"; do
+    if [[ -n "${id}" ]]; then
+      UI_PROMPTS_ARGS+=("--ui-prompt-id" "${id}")
     fi
   done
 fi
@@ -201,4 +209,3 @@ elif [[ "$PLATFORM" == "link" ]]; then
       "$PLATFORM" \
       ${URLS}
 fi
-
