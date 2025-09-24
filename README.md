@@ -39,6 +39,7 @@ To get more information visit us at https://www.ostorlab.co
 - `OSTORLAB_UI_PROMPT_NAMES` - A semicolon-separated list of UI prompt names. For example: `shop;profile;cart;settings`. Each name corresponds by position to an action in `OSTORLAB_UI_PROMPT_ACTIONS`.
 - `OSTORLAB_UI_PROMPT_ACTIONS` - A semicolon-separated list of UI prompt actions. For example: `search for a product named "laptop" and add it to cart;open the profile tab and update email;review cart and proceed to checkout;open settings and enable notifications`. Each action corresponds by position to a name in `OSTORLAB_UI_PROMPT_NAMES`.
 - `OSTORLAB_UI_PROMPT_IDS` - A semicolon-separated list of UI prompt flow IDs to reuse existing prompt flows. For example: `123e4567-e89b-12d3-a456-426614174000;abcdef12-3456-7890-abcd-ef1234567890`. You can use this in addition to or instead of the name/action variables. Multiple IDs can be provided.
+  
   **Note:** The number of names and actions must match, and each name/action pair is positional. You can use both name/action and ID variables together.
 
 #### For a Web scan:
