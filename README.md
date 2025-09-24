@@ -36,7 +36,11 @@ To get more information visit us at https://www.ostorlab.co
 - `OSTORLAB_SBOM_FILES` - A space-separated list of paths to SBOM files.
 - `OSTORLAB_CREDENTIALS` - A semicolon-separated list of credentials with each credential in the format login,password. For example: "user1,pass1;user2,pass2".
 - `OSTORLAB_CUSTOM_CREDENTIALS` - A semicolon-separated list of custom credentials in the format name,value. For example: "api_token,12345;secret_key,67890"
-- `OSTORLAB_UI_PROMPTS` - A semicolon-separated list of UI prompts using natural language instructions to guide the scanner during dynamic testing. For example: "Login with username admin and password test123;Navigate to the settings page and update profile"
+- `OSTORLAB_UI_PROMPT_NAMES` - A semicolon-separated list of UI prompt names. For example: `shop;profile;cart;settings`. Each name corresponds by position to an action in `OSTORLAB_UI_PROMPT_ACTIONS`.
+- `OSTORLAB_UI_PROMPT_ACTIONS` - A semicolon-separated list of UI prompt actions. For example: `search for a product named "laptop" and add it to cart;open the profile tab and update email;review cart and proceed to checkout;open settings and enable notifications`. Each action corresponds by position to a name in `OSTORLAB_UI_PROMPT_NAMES`.
+- `OSTORLAB_UI_PROMPT_IDS` - A semicolon-separated list of UI prompt flow IDs to reuse existing prompt flows. For example: `123e4567-e89b-12d3-a456-426614174000;abcdef12-3456-7890-abcd-ef1234567890`. You can use this in addition to or instead of the name/action variables. Multiple IDs can be provided.
+  
+  **Note:** The number of names and actions must match, and each name/action pair is positional. You can use both name/action and ID variables together.
 
 #### For a Web scan:
 - `OSTORLAB_SCAN_PROFILE` - Set the value to `Full Web Scan` for a Web scan.
@@ -46,7 +50,10 @@ To get more information visit us at https://www.ostorlab.co
 - `OSTORLAB_SBOM_FILES` - A space-separated list of paths to SBOM files.
 - `OSTORLAB_CREDENTIALS` - A semicolon-separated list of credentials with each credential in the format login,password,role,url. For example: "user1,pass1,admin,https://example.com;user2,pass2,user,https://example.com". The role and url values are mandatory for the Web scans.
 - `OSTORLAB_CUSTOM_CREDENTIALS` - A semicolon-separated list of custom credentials in the format name,value. For example: "api_token,12345;secret_key,67890"
-- `OSTORLAB_UI_PROMPTS` - A semicolon-separated list of UI prompts using natural language instructions to guide the scanner during dynamic testing. For example: "Login with username admin and password test123;Navigate to the settings page and update profile"
+- `OSTORLAB_UI_PROMPT_NAMES` - A semicolon-separated list of UI prompt names. For example: `shop;profile;cart;settings`. Each name corresponds by position to an action in `OSTORLAB_UI_PROMPT_ACTIONS`.
+- `OSTORLAB_UI_PROMPT_ACTIONS` - A semicolon-separated list of UI prompt actions. For example: `search for a product named "laptop" and add it to cart;open the profile tab and update email;review cart and proceed to checkout;open settings and enable notifications`. Each action corresponds by position to a name in `OSTORLAB_UI_PROMPT_NAMES`.
+  
+  **Note:** The number of names and actions must match, and each name/action pair is positional.
 - `OSTORLAB_API_SCHEMA` - The paths to the API schema file to be used for the scan.
 - `OSTORLAB_FILTERED_URL_REGEXES` - A space-separated list of regular expressions to exclude URLs from the scan.
 - `OSTORLAB_PROXY` - Specifies the proxy settings for the scan.
@@ -104,7 +111,9 @@ runScanOstorlab:
     OSTORLAB_PLATFORM: android
     OSTORLAB_CREDENTIALS: user1,pass1;user2,pass2
     OSTORLAB_SBOM_FILES: /path/to/sbom1.json /path/to/sbom2.json
-    OSTORLAB_UI_PROMPTS: "Login with username test_user and password test_pass;Navigate to the Transfer Funds section and make a transfer of 100 to account number 123456;Go to settings and update user profile"
+    OSTORLAB_UI_PROMPT_NAMES: "shop;profile;cart;settings"
+    OSTORLAB_UI_PROMPT_ACTIONS: "search for a product named 'laptop' and add it to cart;open the profile tab and update email;review cart and proceed to checkout;open settings and enable notifications"
+    OSTORLAB_UI_PROMPT_IDS: "123;456"
   script:
     - run_ostorlab.sh
 ```
@@ -134,7 +143,9 @@ runScanOstorlab:
     OSTORLAB_SCAN_PROFILE: 'Full Web Scan'
     OSTORLAB_CREDENTIALS: user1,pass1,admin,https://example1.com;user2,pass2,user,https://example2.com
     OSTORLAB_SBOM_FILES: /path/to/sbom1.json /path/to/sbom2.json
-    OSTORLAB_UI_PROMPTS: "Login with username test_user and password test_pass;Navigate to the Transfer Funds section and make a transfer of 100 to account number 123456;Go to settings and update user profile"
+    OSTORLAB_UI_PROMPT_NAMES: "shop;profile;cart;settings"
+    OSTORLAB_UI_PROMPT_ACTIONS: "search for a product named 'laptop' and add it to cart;open the profile tab and update email;review cart and proceed to checkout;open settings and enable notifications"
+    OSTORLAB_UI_PROMPT_IDS: "123;456"
   script:
     - run_ostorlab.sh
 ```

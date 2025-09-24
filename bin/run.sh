@@ -124,15 +124,29 @@ if [[ -n "${OSTORLAB_CUSTOM_CREDENTIALS}" ]]; then
   done
 fi
 
-# Add UI prompts as arguments if OSTORLAB_UI_PROMPTS is set
 UI_PROMPTS_ARGS=()
-if [[ -n "${OSTORLAB_UI_PROMPTS}" ]]; then
-  # Split OSTORLAB_UI_PROMPTS by semicolon to process each prompt
-  IFS=';' read -ra UI_PROMPTS_ARRAY <<< "${OSTORLAB_UI_PROMPTS}"
+if [[ -n "${OSTORLAB_UI_PROMPT_NAMES}" && -n "${OSTORLAB_UI_PROMPT_ACTIONS}" ]]; then
+  IFS=';' read -ra UI_PROMPT_NAMES_ARRAY <<< "${OSTORLAB_UI_PROMPT_NAMES}"
+  IFS=';' read -ra UI_PROMPT_ACTIONS_ARRAY <<< "${OSTORLAB_UI_PROMPT_ACTIONS}"
+  if [[ ${#UI_PROMPT_NAMES_ARRAY[@]} -ne ${#UI_PROMPT_ACTIONS_ARRAY[@]} ]]; then
+    echo "OSTORLAB_UI_PROMPT_NAMES and OSTORLAB_UI_PROMPT_ACTIONS must have the same number of elements."
+    exit 1
+  fi
+  for idx in "${!UI_PROMPT_NAMES_ARRAY[@]}"; do
+    name="${UI_PROMPT_NAMES_ARRAY[$idx]}"
+    action="${UI_PROMPT_ACTIONS_ARRAY[$idx]}"
+    if [[ -n "${name}" && -n "${action}" ]]; then
+      UI_PROMPTS_ARGS+=("--ui-prompt-name" "${name}" "--ui-prompt-action" "${action}")
+    fi
+  done
+fi
 
-  for prompt in "${UI_PROMPTS_ARRAY[@]}"; do
-    # Add each prompt as a separate --ui-prompt argument to the array
-    UI_PROMPTS_ARGS+=("--ui-prompt" "${prompt}")
+if [[ -n "${OSTORLAB_UI_PROMPT_IDS}" ]]; then
+  IFS=';' read -ra UI_PROMPT_IDS_ARRAY <<< "${OSTORLAB_UI_PROMPT_IDS}"
+  for id in "${UI_PROMPT_IDS_ARRAY[@]}"; do
+    if [[ -n "${id}" ]]; then
+      UI_PROMPTS_ARGS+=("--ui-prompt-id" "${id}")
+    fi
   done
 fi
 
@@ -195,4 +209,3 @@ elif [[ "$PLATFORM" == "link" ]]; then
       "$PLATFORM" \
       ${URLS}
 fi
-
