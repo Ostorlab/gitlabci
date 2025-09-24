@@ -51,6 +51,7 @@ To get more information visit us at https://www.ostorlab.co
 - `OSTORLAB_CUSTOM_CREDENTIALS` - A semicolon-separated list of custom credentials in the format name,value. For example: "api_token,12345;secret_key,67890"
 - `OSTORLAB_UI_PROMPT_NAMES` - A semicolon-separated list of UI prompt names. For example: `shop;profile;cart;settings`. Each name corresponds by position to an action in `OSTORLAB_UI_PROMPT_ACTIONS`.
 - `OSTORLAB_UI_PROMPT_ACTIONS` - A semicolon-separated list of UI prompt actions. For example: `search for a product named "laptop" and add it to cart;open the profile tab and update email;review cart and proceed to checkout;open settings and enable notifications`. Each action corresponds by position to a name in `OSTORLAB_UI_PROMPT_NAMES`.
+  
   **Note:** The number of names and actions must match, and each name/action pair is positional.
 - `OSTORLAB_API_SCHEMA` - The paths to the API schema file to be used for the scan.
 - `OSTORLAB_FILTERED_URL_REGEXES` - A space-separated list of regular expressions to exclude URLs from the scan.
